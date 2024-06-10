@@ -4,5 +4,5 @@ set -e
 
 python3 -m pip \
     install \
-    -U \
-    git+https://github.com/michelfurrer1/pywam.git
+    -e \
+    git+https://github.com/michelfurrer1/pywam.git@master#egg=pywam
