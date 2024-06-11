@@ -501,6 +501,10 @@ class SamsungWamPlayer(MediaPlayerEntity):
     async def async_join_players(self, group_members: list[str]) -> None:
         """Join `group_members` as a player group with the current player."""
         speakers = []
+        # Add speaker
+        if speaker := self.hass.data[DOMAIN][ID_MAPPINGS].get(self.entity_id):
+            speakers.append(speaker)
+
         for entity_id in group_members:
             if speaker := self.hass.data[DOMAIN][ID_MAPPINGS].get(entity_id):
                 speakers.append(speaker)
@@ -511,7 +515,7 @@ class SamsungWamPlayer(MediaPlayerEntity):
                 )
 
         if speakers:
-            await self.speaker.group_with(speakers, f"{self.name} - Group")
+            await self.speaker.group_with(speakers, "Lautsprechergruppe")
         else:
             raise HomeAssistantError("No valid Samsung WAM media player entity_id")
 
